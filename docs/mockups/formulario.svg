@@ -1,0 +1,19 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="360" height="640" viewBox="0 0 360 640">
+<rect width="360" height="640" rx="24" fill="#101426"/>
+<text x="22" y="45" fill="#FFFFFF" font-family="Arial" font-size="23" font-weight="bold">Agregar videojuego</text>
+<text x="22" y="85" fill="#B8BCE0" font-family="Arial" font-size="13">Nombre del videojuego</text>
+<rect x="20" y="98" width="320" height="42" rx="8" fill="#292D4B"/>
+<text x="34" y="124" fill="#B8BCE0" font-family="Arial" font-size="14">Ingresá el nombre</text>
+<text x="22" y="172" fill="#B8BCE0" font-family="Arial" font-size="13">Consola</text>
+<rect x="20" y="185" width="320" height="42" rx="8" fill="#292D4B"/>
+<text x="34" y="211" fill="#FFFFFF" font-family="Arial" font-size="14">Seleccionar PS4 o PS5</text>
+<text x="22" y="259" fill="#B8BCE0" font-family="Arial" font-size="13">Género</text>
+<rect x="20" y="272" width="320" height="42" rx="8" fill="#292D4B"/>
+<text x="34" y="298" fill="#B8BCE0" font-family="Arial" font-size="14">Seleccionar género</text>
+<text x="22" y="346" fill="#B8BCE0" font-family="Arial" font-size="13">Disponibilidad</text>
+<rect x="20" y="359" width="320" height="42" rx="8" fill="#292D4B"/>
+<text x="34" y="385" fill="#FFFFFF" font-family="Arial" font-size="14">Disponible</text>
+<rect x="20" y="430" width="320" height="46" rx="10" fill="#7665F5"/>
+<text x="126" y="458" fill="#FFFFFF" font-family="Arial" font-size="15" font-weight="bold">Guardar juego</text>
+<text x="22" y="515" fill="#B8BCE0" font-family="Arial" font-size="12">Propuesta visual del formulario</text>
+</svg>

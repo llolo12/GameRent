@@ -1,0 +1,12 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="360" height="640" viewBox="0 0 360 640">
+<rect width="360" height="640" rx="24" fill="#101426"/>
+<text x="22" y="45" fill="#FFFFFF" font-family="Arial" font-size="24" font-weight="bold">Catálogo</text>
+<text x="22" y="70" fill="#B8BCE0" font-family="Arial" font-size="13">Encontrá tu próximo videojuego</text>
+<rect x="20" y="90" width="320" height="42" rx="10" fill="#292D4B"/>
+<text x="36" y="116" fill="#B8BCE0" font-family="Arial" font-size="14">Buscar por nombre...</text>
+<rect x="20" y="145" width="95" height="32" rx="8" fill="#7665F5"/>
+<text x="43" y="166" fill="#FFFFFF" font-family="Arial" font-size="12">Todos</text>
+<rect x="125" y="145" width="95" height="32" rx="8" fill="#292D4B"/>
+<text x="157" y="166" fill="#FFFFFF" font-family="Arial" font-size="12">PS4</text>
+<rect x="230" y="145" width="95" height="32" rx="8" fill="#292D4B"/>
+<text x="262" y="166" fill="#FFFFFF" font-family="Arial" font-size="12">PS5</text>
