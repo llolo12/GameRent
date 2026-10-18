@@ -1,0 +1,470 @@
+
+package com.example.gamerent
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.gamerent.ui.theme.GameRentTheme
+
+private val Fondo = Color(0xFF101522)
+private val Tarjeta = Color(0xFF1C2638)
+private val Morado = Color(0xFF8B72FF)
+private val Texto = Color(0xFFF5F6FA)
+private val TextoSecundario = Color(0xFFADB8CC)
+
+data class Videojuego(
+    val nombre: String,
+    val consola: String,
+    val genero: String,
+    val disponible: Boolean
+)
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            GameRentTheme {
+                PantallaGameRent()
+            }
+        }
+    }
+}
+
+@Composable
+fun PantallaGameRent() {
+    val juegos = remember {
+        mutableStateListOf(
+            Videojuego("God of War Ragnarök", "PS5", "Aventura", true),
+            Videojuego("Spider-Man 2", "PS5", "Acción", true),
+            Videojuego("Gran Turismo 7", "PS5", "Carreras", false),
+            Videojuego("God of War", "PS4", "Aventura", true),
+            Videojuego("Ghost of Tsushima", "PS4", "Acción", true),
+            Videojuego("Crash Team Racing", "PS4", "Carreras", false)
+        )
+    }
+
+    var busqueda by remember { mutableStateOf("") }
+    var consola by remember { mutableStateOf("Todas") }
+    var mostrarFormulario by remember { mutableStateOf(false) }
+    var nombre by remember { mutableStateOf("") }
+    var consolaNueva by remember { mutableStateOf("PS5") }
+    var juegoEliminar by remember { mutableStateOf<Videojuego?>(null) }
+    var juegoEditar by remember { mutableStateOf<Videojuego?>(null) }
+    var seccion by remember { mutableStateOf("Inicio") }
+
+    val filtrados = juegos.filter {
+        it.nombre.contains(busqueda, ignoreCase = true) &&
+                (consola == "Todas" || it.consola == consola)
+    }
+
+    Scaffold(
+        containerColor = Fondo,
+        bottomBar = {
+            NavigationBar(containerColor = Tarjeta) {
+                listOf(
+                    "Inicio" to Icons.Default.Home,
+                    "Catálogo" to Icons.Default.SportsEsports,
+                    "Agregar" to Icons.Default.Add,
+                    "Perfil" to Icons.Default.Person
+                ).forEach { (titulo, icono) ->
+                    NavigationBarItem(
+                        selected = seccion == titulo,
+                        onClick = {
+                            seccion = titulo
+                            if (titulo == "Agregar") {
+                                nombre = ""
+                                mostrarFormulario = true
+                            }
+                        },
+                        icon = { Icon(icono, contentDescription = titulo) },
+                        label = { Text(titulo) },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = Morado,
+                            selectedTextColor = Morado,
+                            unselectedIconColor = TextoSecundario,
+                            unselectedTextColor = TextoSecundario,
+                            indicatorColor = Fondo
+                        )
+                    )
+                }
+            }
+        }
+    ) { padding ->
+        if (seccion == "Perfil") {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Fondo)
+                    .padding(padding)
+                    .padding(24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    Icons.Default.Person,
+                    contentDescription = "Perfil",
+                    tint = Morado,
+                    modifier = Modifier.size(72.dp)
+                )
+                Text(
+                    "Perfil de GameRent",
+                    color = Texto,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    "Catálogo de alquiler de videojuegos para PS4 y PS5.",
+                    color = TextoSecundario
+                )
+                Text(
+                    "Videojuegos registrados: ${juegos.size}",
+                    color = Texto
+                )
+            }
+        } else {
+            LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Fondo)
+                .padding(padding),
+            contentPadding = PaddingValues(20.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(
+                            "GameRent",
+                            color = Texto,
+                            fontSize = 28.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            "Tu próximo juego te espera",
+                            color = TextoSecundario,
+                            fontSize = 14.sp
+                        )
+                    }
+                    Icon(
+                        Icons.Default.SportsEsports,
+                        contentDescription = "Videojuegos",
+                        tint = Morado,
+                        modifier = Modifier.size(38.dp)
+                    )
+                }
+            }
+
+            item {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = Morado),
+                    shape = RoundedCornerShape(20.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        modifier = Modifier.padding(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            "¡La diversión comienza aquí!",
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            "Explorá el catálogo y encontrá tu próximo videojuego favorito.",
+                            color = Color.White,
+                            fontSize = 14.sp
+                        )
+                        Text(
+                            "PS4  •  PS5  •  Nuevas aventuras",
+                            color = Color.White,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
+            }
+
+            item {
+                OutlinedTextField(
+                    value = busqueda,
+                    onValueChange = { busqueda = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text("Buscar videojuegos...") },
+                    leadingIcon = {
+                        Icon(Icons.Default.Search, contentDescription = "Buscar")
+                    },
+                    singleLine = true,
+                    shape = RoundedCornerShape(16.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Texto,
+                        unfocusedTextColor = Texto,
+                        focusedBorderColor = Morado,
+                        unfocusedBorderColor = TextoSecundario,
+                        focusedLeadingIconColor = Morado,
+                        unfocusedLeadingIconColor = TextoSecundario,
+                        focusedPlaceholderColor = TextoSecundario,
+                        unfocusedPlaceholderColor = TextoSecundario,
+                        cursorColor = Morado
+                    )
+                )
+            }
+
+            item {
+                Text(
+                    "Elegí tu consola",
+                    color = Texto,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf("Todas", "PS4", "PS5").forEach { opcion ->
+                        FilterChip(
+                            selected = consola == opcion,
+                            onClick = { consola = opcion },
+                            label = { Text(opcion) },
+                            leadingIcon = if (consola == opcion) {
+                                { Icon(Icons.Default.Check, contentDescription = null) }
+                            } else null,
+                            colors = FilterChipDefaults.filterChipColors(
+                                selectedContainerColor = Morado,
+                                selectedLabelColor = Color.White,
+                                labelColor = TextoSecundario,
+                                selectedLeadingIconColor = Color.White
+                            )
+                        )
+                    }
+                }
+            }
+
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        if (seccion == "Inicio") "Juegos destacados" else "Catálogo de juegos",
+                        color = Texto,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        "${filtrados.size} juegos",
+                        color = TextoSecundario,
+                        fontSize = 12.sp
+                    )
+                }
+            }
+
+            if (filtrados.isEmpty()) {
+                item {
+                    Text(
+                        "No encontramos juegos. Probá con otra búsqueda.",
+                        color = TextoSecundario
+                    )
+                }
+            }
+
+            items(filtrados) { juego ->
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = Tarjeta),
+                    shape = RoundedCornerShape(18.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(54.dp)
+                                .background(Morado.copy(alpha = 0.18f), RoundedCornerShape(14.dp)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                Icons.Default.SportsEsports,
+                                contentDescription = null,
+                                tint = Morado,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
+
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                juego.nombre,
+                                color = Texto,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 15.sp
+                            )
+                            Text(
+                                "${juego.consola} • ${juego.genero}",
+                                color = TextoSecundario,
+                                fontSize = 13.sp
+                            )
+                            Spacer(Modifier.height(5.dp))
+                            Text(
+                                if (juego.disponible) "Disponible para alquiler" else "No disponible",
+                                color = if (juego.disponible) Color(0xFF64D9A2) else Color(0xFFFF8D8D),
+                                fontSize = 12.sp
+                            )
+                        }
+
+                        Row {
+                            IconButton(
+                                onClick = {
+                                    juegoEditar = juego
+                                    nombre = juego.nombre
+                                    consolaNueva = juego.consola
+                                    mostrarFormulario = true
+                                }
+                            ) {
+                                Icon(
+                                    Icons.Default.Edit,
+                                    contentDescription = "Editar juego",
+                                    tint = Morado
+                                )
+                            }
+                            IconButton(onClick = { juegoEliminar = juego }) {
+                                Icon(
+                                    Icons.Default.DeleteOutline,
+                                    contentDescription = "Eliminar juego",
+                                    tint = TextoSecundario
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            item {
+                OutlinedButton(
+                    onClick = {
+                        nombre = ""
+                        mostrarFormulario = true
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(14.dp)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text("Agregar videojuego")
+                }
+            }
+        }
+        }
+    }
+
+    if (mostrarFormulario) {
+        AlertDialog(
+            onDismissRequest = { mostrarFormulario = false; juegoEditar = null },
+            title = { Text(if (juegoEditar == null) "Nuevo videojuego" else "Editar videojuego") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    OutlinedTextField(
+                        value = nombre,
+                        onValueChange = { nombre = it },
+                        label = { Text("Nombre del videojuego") },
+                        singleLine = true
+                    )
+                    Text("Consola")
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        listOf("PS4", "PS5").forEach { opcion ->
+                            FilterChip(
+                                selected = consolaNueva == opcion,
+                                onClick = { consolaNueva = opcion },
+                                label = { Text(opcion) }
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        if (nombre.isNotBlank()) {
+                            val existente = juegoEditar
+                            if (existente == null) {
+                                juegos.add(
+                                    0,
+                                    Videojuego(
+                                        nombre.trim(),
+                                        consolaNueva,
+                                        "General",
+                                        true
+                                    )
+                                )
+                            } else {
+                                val indice = juegos.indexOf(existente)
+                                if (indice >= 0) {
+                                    juegos[indice] = existente.copy(
+                                        nombre = nombre.trim(),
+                                        consola = consolaNueva
+                                    )
+                                }
+                            }
+                            juegoEditar = null
+                            busqueda = ""
+                            consola = "Todas"
+                            mostrarFormulario = false
+                        }
+                    }
+                ) {
+                    Text("Guardar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { mostrarFormulario = false; juegoEditar = null }) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+
+    juegoEliminar?.let { juego ->
+        AlertDialog(
+            onDismissRequest = { juegoEliminar = null },
+            title = { Text("¿Eliminar videojuego?") },
+            text = { Text("Se eliminará ${juego.nombre} del catálogo.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        juegos.remove(juego)
+                        juegoEliminar = null
+                    }
+                ) {
+                    Text("Eliminar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { juegoEliminar = null }) {
+                    Text("Cancelar")
+                }
+            }
+        )
+    }
+}
+
+
+
