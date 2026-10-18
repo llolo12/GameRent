@@ -1,0 +1,23 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="360" height="640" viewBox="0 0 360 640">
+<rect width="360" height="640" rx="24" fill="#101426"/>
+<text x="24" y="42" fill="#FFFFFF" font-family="Arial" font-size="22" font-weight="bold">GameRent</text>
+<text x="24" y="75" fill="#B8BCE0" font-family="Arial" font-size="13">Tu próximo juego te espera</text>
+<rect x="20" y="110" width="320" height="150" rx="16" fill="#292D4B"/>
+<text x="38" y="145" fill="#B8BCE0" font-family="Arial" font-size="12">BIENVENIDO A</text>
+<text x="38" y="180" fill="#FFFFFF" font-family="Arial" font-size="25" font-weight="bold">GameRent</text>
+<text x="38" y="207" fill="#D7D9F2" font-family="Arial" font-size="13">Explorá el catálogo de juegos</text>
+<rect x="38" y="222" width="115" height="26" rx="8" fill="#7665F5"/>
+<text x="50" y="240" fill="#FFFFFF" font-family="Arial" font-size="12">Ver catálogo</text>
+<text x="22" y="300" fill="#FFFFFF" font-family="Arial" font-size="18" font-weight="bold">Categorías</text>
+<rect x="22" y="318" width="145" height="65" rx="12" fill="#292D4B"/>
+<text x="40" y="347" fill="#FFFFFF" font-family="Arial" font-size="16">PlayStation 4</text>
+<text x="40" y="367" fill="#B8BCE0" font-family="Arial" font-size="12">Explorar juegos</text>
+<rect x="180" y="318" width="158" height="65" rx="12" fill="#292D4B"/>
+<text x="198" y="347" fill="#FFFFFF" font-family="Arial" font-size="16">PlayStation 5</text>
+<text x="198" y="367" fill="#B8BCE0" font-family="Arial" font-size="12">Explorar juegos</text>
+<rect x="0" y="570" width="360" height="70" fill="#1B1F36"/>
+<text x="25" y="605" fill="#FFFFFF" font-family="Arial" font-size="12">Inicio</text>
+<text x="110" y="605" fill="#B8BCE0" font-family="Arial" font-size="12">Catálogo</text>
+<text x="210" y="605" fill="#B8BCE0" font-family="Arial" font-size="12">Agregar</text>
+<text x="300" y="605" fill="#B8BCE0" font-family="Arial" font-size="12">Perfil</text>
+</svg>
