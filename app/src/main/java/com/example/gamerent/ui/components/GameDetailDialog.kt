@@ -16,7 +16,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
+import com.example.gamerent.R
 import com.example.gamerent.model.Videojuego
 
 private val MoradoColor = Color(0xFF8B72FF)
@@ -66,7 +68,7 @@ fun GameDetailDialog(
                             ) {
                                 Icon(
                                     Icons.Default.PlayCircle,
-                                    contentDescription = "Video",
+                                    contentDescription = stringResource(R.string.video_accessibility),
                                     tint = Color.White,
                                     modifier = Modifier.size(48.dp)
                                 )
@@ -88,15 +90,15 @@ fun GameDetailDialog(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
-                        Text("Consola", color = TextoSecundarioColor, fontSize = 12.sp)
-                        Text(videojuego.consola, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                        Text(stringResource(R.string.console_label), color = TextoSecundarioColor, fontSize = 12.sp)
+                        Text(LocalizedGameOptionLabel(videojuego.consola), fontWeight = FontWeight.Bold, fontSize = 15.sp)
                     }
                     Column {
-                        Text("Género", color = TextoSecundarioColor, fontSize = 12.sp)
-                        Text(videojuego.genero, fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                        Text(stringResource(R.string.genre_label), color = TextoSecundarioColor, fontSize = 12.sp)
+                        Text(LocalizedGameOptionLabel(videojuego.genero), fontWeight = FontWeight.Bold, fontSize = 15.sp)
                     }
                     Column {
-                        Text("Precio / día", color = TextoSecundarioColor, fontSize = 12.sp)
+                        Text(stringResource(R.string.price_per_day), color = TextoSecundarioColor, fontSize = 12.sp)
                         Text("$${videojuego.precioAlquiler}", fontWeight = FontWeight.Bold, fontSize = 15.sp)
                     }
                 }
@@ -108,13 +110,13 @@ fun GameDetailDialog(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Text("Estado:", fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.status), fontWeight = FontWeight.SemiBold)
                     Surface(
                         color = if (videojuego.disponible) Color(0xFF64D9A2).copy(alpha = 0.2f) else Color(0xFFFF8D8D).copy(alpha = 0.2f),
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(
-                            text = if (videojuego.disponible) "Disponible para Alquiler" else "No disponible actualmente",
+                            text = stringResource(if (videojuego.disponible) R.string.available_for_rent_status else R.string.unavailable_status),
                             color = if (videojuego.disponible) Color(0xFF64D9A2) else Color(0xFFFF8D8D),
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                             fontSize = 13.sp,
@@ -129,7 +131,7 @@ fun GameDetailDialog(
                 onClick = onDismiss,
                 colors = ButtonDefaults.buttonColors(containerColor = MoradoColor)
             ) {
-                Text("Cerrar")
+                Text(stringResource(R.string.close))
             }
         }
     )

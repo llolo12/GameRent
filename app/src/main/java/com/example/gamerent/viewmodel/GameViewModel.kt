@@ -1,8 +1,9 @@
 package com.example.gamerent.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.gamerent.data.repository.VideojuegoRepository
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.example.gamerent.domain.repository.GameRepository
 import com.example.gamerent.model.Consolas
 import com.example.gamerent.model.FiltroDisponibilidad
 import com.example.gamerent.model.Generos
@@ -10,7 +11,7 @@ import com.example.gamerent.model.Videojuego
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() {
+class GameViewModel(application: Application, private val repository: GameRepository) : AndroidViewModel(application) {
 
     private val _busqueda = MutableStateFlow("")
     val busqueda: StateFlow<String> = _busqueda.asStateFlow()
@@ -143,7 +144,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
     ) {
         val nombreLimpio = nombre.trim()
         if (nombreLimpio.isBlank()) {
-            mostrarError("El nombre del videojuego no puede estar vacío.")
+            mostrarError(getApplication<Application>().getString(com.example.gamerent.R.string.name_required_error))
             return
         }
 
@@ -175,7 +176,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
                 }
                 cerrarFormulario()
             } catch (e: Exception) {
-                mostrarError("Error al guardar el videojuego: ${e.localizedMessage}")
+                mostrarError(getApplication<Application>().getString(com.example.gamerent.R.string.save_game_error, e.localizedMessage.orEmpty()))
             }
         }
     }
@@ -187,7 +188,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
                 repository.eliminarVideojuego(juego)
                 _juegoEliminar.value = null
             } catch (e: Exception) {
-                mostrarError("Error al eliminar el videojuego: ${e.localizedMessage}")
+                mostrarError(getApplication<Application>().getString(com.example.gamerent.R.string.delete_game_error, e.localizedMessage.orEmpty()))
             }
         }
     }

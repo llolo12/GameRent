@@ -27,11 +27,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
 import com.example.gamerent.model.Consolas
 import com.example.gamerent.model.Generos
 import com.example.gamerent.model.Videojuego
+import com.example.gamerent.R
 import java.io.File
 
 private val MoradoColor = Color(0xFF8B72FF)
@@ -73,7 +75,7 @@ fun AddEditGameDialog(
             mediaUriState = tempCameraUri.toString()
             mediaTypeState = "IMAGE"
         } else {
-            onError("No se pudo capturar la foto de la cámara.")
+            onError(context.getString(R.string.camera_capture_error))
         }
     }
 
@@ -99,7 +101,7 @@ fun AddEditGameDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (juegoEditar == null) "Agregar Videojuego" else "Editar Videojuego") },
+        title = { Text(stringResource(if (juegoEditar == null) R.string.add_game_dialog else R.string.edit_game_dialog)) },
         text = {
             Column(
                 modifier = Modifier
@@ -111,7 +113,7 @@ fun AddEditGameDialog(
                 OutlinedTextField(
                     value = nombre,
                     onValueChange = { nombre = it },
-                    label = { Text("Nombre del videojuego *") },
+                    label = { Text(stringResource(R.string.game_name_required)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -120,20 +122,20 @@ fun AddEditGameDialog(
                 OutlinedTextField(
                     value = precioTexto,
                     onValueChange = { precioTexto = it },
-                    label = { Text("Precio de alquiler por día ($)") },
+                    label = { Text(stringResource(R.string.rental_price_per_day)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
 
                 // Consola
-                Text("Consola", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+                Text(stringResource(R.string.console_label), fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(Consolas.opcionesFormulario) { opcion ->
                         val selected = consola.equals(opcion, ignoreCase = true)
                         FilterChip(
                             selected = selected,
                             onClick = { consola = opcion },
-                            label = { Text(opcion) },
+                            label = { Text(LocalizedGameOptionLabel(opcion)) },
                             leadingIcon = if (selected) {
                                 { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp)) }
                             } else null
@@ -142,14 +144,14 @@ fun AddEditGameDialog(
                 }
 
                 // Género
-                Text("Género", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+                Text(stringResource(R.string.genre_label), fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(Generos.opcionesFormulario) { opcion ->
                         val selected = genero.equals(opcion, ignoreCase = true)
                         FilterChip(
                             selected = selected,
                             onClick = { genero = opcion },
-                            label = { Text(opcion) },
+                            label = { Text(LocalizedGameOptionLabel(opcion)) },
                             leadingIcon = if (selected) {
                                 { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp)) }
                             } else null
@@ -163,7 +165,7 @@ fun AddEditGameDialog(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Disponible para alquiler", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+                    Text(stringResource(R.string.rental_available), fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                     Switch(
                         checked = disponible,
                         onCheckedChange = { disponible = it }
@@ -171,7 +173,7 @@ fun AddEditGameDialog(
                 }
 
                 // Selección de Imagen / Video
-                Text("Imagen / Video del videojuego", fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
+                Text(stringResource(R.string.image_video_game), fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -193,7 +195,7 @@ fun AddEditGameDialog(
                                 tempCameraUri = uri
                                 cameraLauncher.launch(uri)
                             } catch (e: Exception) {
-                                onError("Error al iniciar la cámara: ${e.localizedMessage}")
+                                onError(context.getString(R.string.camera_start_error, e.localizedMessage.orEmpty()))
                             }
                         },
                         modifier = Modifier.weight(1f),
@@ -201,7 +203,7 @@ fun AddEditGameDialog(
                     ) {
                         Icon(Icons.Default.CameraAlt, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(4.dp))
-                        Text("Cámara", fontSize = 12.sp)
+                        Text(stringResource(R.string.camera), fontSize = 12.sp)
                     }
 
                     // Botón Galería Foto
@@ -212,7 +214,7 @@ fun AddEditGameDialog(
                                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                                 )
                             } catch (e: Exception) {
-                                onError("Error al abrir galería de fotos: ${e.localizedMessage}")
+                                onError(context.getString(R.string.gallery_photo_error, e.localizedMessage.orEmpty()))
                             }
                         },
                         modifier = Modifier.weight(1f),
@@ -220,7 +222,7 @@ fun AddEditGameDialog(
                     ) {
                         Icon(Icons.Default.Image, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(4.dp))
-                        Text("Galería", fontSize = 12.sp)
+                        Text(stringResource(R.string.gallery), fontSize = 12.sp)
                     }
 
                     // Botón Galería Video
@@ -231,7 +233,7 @@ fun AddEditGameDialog(
                                     PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
                                 )
                             } catch (e: Exception) {
-                                onError("Error al abrir galería de video: ${e.localizedMessage}")
+                                onError(context.getString(R.string.gallery_video_error, e.localizedMessage.orEmpty()))
                             }
                         },
                         modifier = Modifier.weight(1f),
@@ -239,7 +241,7 @@ fun AddEditGameDialog(
                     ) {
                         Icon(Icons.Default.Videocam, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(4.dp))
-                        Text("Video", fontSize = 12.sp)
+                        Text(stringResource(R.string.video), fontSize = 12.sp)
                     }
                 }
 
@@ -255,14 +257,14 @@ fun AddEditGameDialog(
                     ) {
                         AsyncImage(
                             model = uriStr,
-                            contentDescription = "Vista previa multimedia",
+                            contentDescription = stringResource(R.string.photo_preview_accessibility),
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )
                         if (mediaTypeState == "VIDEO") {
                             Icon(
                                 Icons.Default.Videocam,
-                                contentDescription = "Video seleccionado",
+                                contentDescription = stringResource(R.string.selected_video_accessibility),
                                 tint = MoradoColor,
                                 modifier = Modifier.size(36.dp)
                             )
@@ -286,12 +288,12 @@ fun AddEditGameDialog(
                     )
                 }
             ) {
-                Text("Guardar")
+                Text(stringResource(R.string.save))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+                Text(stringResource(R.string.cancel))
             }
         }
     )

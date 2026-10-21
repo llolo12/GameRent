@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.example.gamerent.R
 import com.example.gamerent.model.Videojuego
 import com.example.gamerent.ui.components.FilterSection
 import com.example.gamerent.ui.components.GameCard
@@ -46,7 +48,7 @@ fun CatalogScreen(
                 containerColor = MoradoColor,
                 contentColor = Color.White
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Agregar videojuego")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_game_accessibility))
             }
         }
     ) { innerPadding ->
@@ -61,13 +63,13 @@ fun CatalogScreen(
         ) {
             item {
                 Text(
-                    text = "Catálogo de Juegos",
+                    text = stringResource(R.string.catalog_title),
                     color = TextoColor,
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Explorá, filtrá y administrá todos los videojuegos disponibles en GameRent.",
+                    text = stringResource(R.string.catalog_subtitle),
                     color = TextoSecundarioColor,
                     fontSize = 14.sp
                 )
@@ -94,13 +96,13 @@ fun CatalogScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Resultados del catálogo",
+                        text = stringResource(R.string.catalog_results),
                         color = TextoColor,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "${juegosFiltrados.size} juegos encontrados",
+                        text = stringResource(R.string.games_found, juegosFiltrados.size),
                         color = TextoSecundarioColor,
                         fontSize = 12.sp
                     )
@@ -121,7 +123,7 @@ fun CatalogScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "No se encontraron videojuegos que coincidan con la búsqueda.",
+                                text = stringResource(R.string.empty_search),
                                 color = TextoSecundarioColor,
                                 fontSize = 14.sp
                             )

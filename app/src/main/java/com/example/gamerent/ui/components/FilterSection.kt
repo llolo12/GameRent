@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.example.gamerent.R
 import com.example.gamerent.model.Consolas
 import com.example.gamerent.model.FiltroDisponibilidad
 import com.example.gamerent.model.Generos
@@ -47,14 +49,14 @@ fun FilterSection(
             value = busqueda,
             onValueChange = onBusquedaChange,
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Buscar videojuego por nombre...") },
+            placeholder = { Text(stringResource(R.string.search_game)) },
             leadingIcon = {
-                Icon(Icons.Default.Search, contentDescription = "Buscar")
+                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search))
             },
             trailingIcon = if (busqueda.isNotEmpty()) {
                 {
                     IconButton(onClick = { onBusquedaChange("") }) {
-                        Icon(Icons.Default.Clear, contentDescription = "Limpiar búsqueda")
+                        Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.clear_search))
                     }
                 }
             } else null,
@@ -90,7 +92,7 @@ fun FilterSection(
                     modifier = Modifier.size(20.dp)
                 )
                 Text(
-                    text = "Filtros combinados",
+                    text = stringResource(R.string.combined_filters),
                     color = TextoColor,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.Bold
@@ -100,20 +102,20 @@ fun FilterSection(
                 onClick = onResetFiltros,
                 contentPadding = PaddingValues(horizontal = 8.dp)
             ) {
-                Text("Limpiar filtros", color = MoradoColor, fontSize = 12.sp)
+                Text(stringResource(R.string.clear_filters), color = MoradoColor, fontSize = 12.sp)
             }
         }
 
         // Filtro Consolas (PS4, PS5, Todas)
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text("Consola:", color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
+            Text(stringResource(R.string.console), color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(Consolas.lista) { opcion ->
                     val selected = consolaSeleccionada.equals(opcion, ignoreCase = true)
                     FilterChip(
                         selected = selected,
                         onClick = { onConsolaChange(opcion) },
-                        label = { Text(opcion) },
+                        label = { Text(LocalizedGameOptionLabel(opcion)) },
                         leadingIcon = if (selected) {
                             { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp)) }
                         } else null,
@@ -130,14 +132,14 @@ fun FilterSection(
 
         // Filtro Géneros
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text("Género:", color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
+            Text(stringResource(R.string.genre), color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(Generos.lista) { opcion ->
                     val selected = generoSeleccionado.equals(opcion, ignoreCase = true)
                     FilterChip(
                         selected = selected,
                         onClick = { onGeneroChange(opcion) },
-                        label = { Text(opcion) },
+                        label = { Text(LocalizedGameOptionLabel(opcion)) },
                         leadingIcon = if (selected) {
                             { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp)) }
                         } else null,
@@ -154,14 +156,18 @@ fun FilterSection(
 
         // Filtro Disponibilidad
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            Text("Disponibilidad:", color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
+            Text(stringResource(R.string.availability), color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(FiltroDisponibilidad.entries) { opcion ->
                     val selected = disponibilidadSeleccionada == opcion
                     FilterChip(
                         selected = selected,
                         onClick = { onDisponibilidadChange(opcion) },
-                        label = { Text(opcion.titulo) },
+                        label = { Text(stringResource(when (opcion) {
+                            FiltroDisponibilidad.TODOS -> R.string.availability_all
+                            FiltroDisponibilidad.DISPONIBLES -> R.string.availability_available
+                            FiltroDisponibilidad.NO_DISPONIBLES -> R.string.availability_unavailable
+                        })) },
                         leadingIcon = if (selected) {
                             { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp)) }
                         } else null,

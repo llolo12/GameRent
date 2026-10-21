@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.example.gamerent.R
 import com.example.gamerent.model.Videojuego
 import com.example.gamerent.ui.components.FilterSection
 import com.example.gamerent.ui.components.GameCard
@@ -63,14 +65,14 @@ fun HomeScreen(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Tu próximo juego te espera",
+                        text = stringResource(R.string.home_tagline),
                         color = TextoSecundarioColor,
                         fontSize = 14.sp
                     )
                 }
                 Icon(
                     Icons.Default.SportsEsports,
-                    contentDescription = "Videojuegos",
+                    contentDescription = stringResource(R.string.games_icon_accessibility),
                     tint = MoradoColor,
                     modifier = Modifier.size(38.dp)
                 )
@@ -89,18 +91,18 @@ fun HomeScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        text = "¡La diversión comienza aquí!",
+                        text = stringResource(R.string.home_banner_title),
                         color = Color.White,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "Explorá el catálogo de alquileres y encontrá tu próximo título favorito.",
+                        text = stringResource(R.string.home_banner_body),
                         color = Color.White.copy(alpha = 0.9f),
                         fontSize = 14.sp
                     )
                     Text(
-                        text = "PS4  •  PS5  •  Guardado en base de datos local",
+                        text = "PS4  •  PS5  •  ${stringResource(R.string.local_database)}",
                         color = Color.White,
                         fontWeight = FontWeight.Medium,
                         fontSize = 12.sp
@@ -132,13 +134,13 @@ fun HomeScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Videojuegos",
+                    text = stringResource(R.string.games),
                     color = TextoColor,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "${juegosFiltrados.size} resultados",
+                    text = stringResource(R.string.results_count, juegosFiltrados.size),
                     color = TextoSecundarioColor,
                     fontSize = 13.sp
                 )
@@ -159,7 +161,7 @@ fun HomeScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "No se encontraron videojuegos con los filtros seleccionados.",
+                            text = stringResource(R.string.empty_games),
                             color = TextoSecundarioColor,
                             fontSize = 14.sp
                         )
@@ -185,7 +187,7 @@ fun HomeScreen(
             ) {
                 Icon(Icons.Default.Add, contentDescription = null)
                 Spacer(Modifier.width(8.dp))
-                Text("Agregar nuevo videojuego")
+                Text(stringResource(R.string.add_game))
             }
         }
     }

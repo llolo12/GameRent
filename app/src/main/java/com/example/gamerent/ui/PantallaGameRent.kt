@@ -9,6 +9,8 @@ import androidx.compose.material.icons.filled.SportsEsports
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import com.example.gamerent.R
 import com.example.gamerent.ui.components.AddEditGameDialog
 import com.example.gamerent.ui.components.ConfirmDeleteDialog
 import com.example.gamerent.ui.components.ErrorDialog
@@ -37,30 +39,31 @@ fun PantallaGameRent(viewModel: GameViewModel) {
     val juegoDetalle by viewModel.juegoDetalle.collectAsState()
     val mensajeError by viewModel.mensajeError.collectAsState()
 
-    var seccionActual by remember { mutableStateOf("Inicio") }
+    var seccionActual by remember { mutableStateOf("home") }
 
     Scaffold(
         containerColor = FondoColor,
         bottomBar = {
             NavigationBar(containerColor = TarjetaColor) {
                 listOf(
-                    "Inicio" to Icons.Default.Home,
-                    "Catálogo" to Icons.Default.SportsEsports,
-                    "Agregar" to Icons.Default.Add,
-                    "Mapa" to Icons.Default.LocationOn,
-                    "Perfil" to Icons.Default.Person
-                ).forEach { (titulo, icono) ->
+                    Triple("home", R.string.nav_home, Icons.Default.Home),
+                    Triple("catalog", R.string.nav_catalog, Icons.Default.SportsEsports),
+                    Triple("add", R.string.nav_add, Icons.Default.Add),
+                    Triple("map", R.string.nav_map, Icons.Default.LocationOn),
+                    Triple("profile", R.string.nav_profile, Icons.Default.Person)
+                ).forEach { (section, labelRes, icon) ->
+                    val label = stringResource(labelRes)
                     NavigationBarItem(
-                        selected = seccionActual == titulo,
+                        selected = seccionActual == section,
                         onClick = {
-                            if (titulo == "Agregar") {
+                            if (section == "add") {
                                 viewModel.abrirFormularioNuevo()
                             } else {
-                                seccionActual = titulo
+                                seccionActual = section
                             }
                         },
-                        icon = { Icon(icono, contentDescription = titulo) },
-                        label = { Text(titulo) },
+                        icon = { Icon(icon, contentDescription = label) },
+                        label = { Text(label) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MoradoColor,
                             selectedTextColor = MoradoColor,
@@ -74,7 +77,7 @@ fun PantallaGameRent(viewModel: GameViewModel) {
         }
     ) { padding ->
         when (seccionActual) {
-            "Inicio" -> HomeScreen(
+            "home" -> HomeScreen(
                 viewModel = viewModel,
                 busqueda = busqueda,
                 consola = consola,
@@ -83,7 +86,7 @@ fun PantallaGameRent(viewModel: GameViewModel) {
                 onAgregarClick = { viewModel.abrirFormularioNuevo() },
                 paddingValues = padding
             )
-            "Catálogo" -> CatalogScreen(
+            "catalog" -> CatalogScreen(
                 viewModel = viewModel,
                 busqueda = busqueda,
                 consola = consola,
@@ -91,8 +94,8 @@ fun PantallaGameRent(viewModel: GameViewModel) {
                 juegosFiltrados = juegosFiltrados,
                 paddingValues = padding
             )
-            "Mapa" -> MapScreen(paddingValues = padding)
-            "Perfil" -> ProfileScreen(
+            "map" -> MapScreen(paddingValues = padding)
+            "profile" -> ProfileScreen(
                 totalJuegos = todosLosJuegos.size,
                 juegosDisponibles = todosLosJuegos.count { it.disponible },
                 paddingValues = padding

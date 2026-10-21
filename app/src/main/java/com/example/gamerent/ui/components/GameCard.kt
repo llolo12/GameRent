@@ -16,7 +16,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
+import com.example.gamerent.R
 import com.example.gamerent.model.Videojuego
 
 private val TarjetaColor = Color(0xFF1C2638)
@@ -51,7 +53,7 @@ fun GameCard(
                     .clip(RoundedCornerShape(14.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                if (!videojuego.mediaUri.isNull_or_empty_or_blank()) {
+                if (!videojuego.mediaUri.isNullOrBlank()) {
                     AsyncImage(
                         model = videojuego.mediaUri,
                         contentDescription = videojuego.nombre,
@@ -67,7 +69,7 @@ fun GameCard(
                         ) {
                             Icon(
                                 Icons.Default.PlayCircle,
-                                contentDescription = "Video",
+                                contentDescription = stringResource(R.string.video_accessibility),
                                 tint = Color.White,
                                 modifier = Modifier.size(24.dp)
                             )
@@ -91,7 +93,7 @@ fun GameCard(
                     fontSize = 16.sp
                 )
                 Text(
-                    text = "${videojuego.consola} • ${videojuego.genero}",
+                    text = "${LocalizedGameOptionLabel(videojuego.consola)} • ${LocalizedGameOptionLabel(videojuego.genero)}",
                     color = TextoSecundarioColor,
                     fontSize = 13.sp
                 )
@@ -101,13 +103,13 @@ fun GameCard(
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     Text(
-                        text = if (videojuego.disponible) "Disponible" else "No disponible",
+                        text = stringResource(if (videojuego.disponible) R.string.available else R.string.unavailable),
                         color = if (videojuego.disponible) Color(0xFF64D9A2) else Color(0xFFFF8D8D),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium
                     )
                     Text(
-                        text = "• $${videojuego.precioAlquiler}/día",
+                        text = stringResource(R.string.video_price_per_day, videojuego.precioAlquiler),
                         color = TextoSecundarioColor,
                         fontSize = 12.sp
                     )
@@ -118,22 +120,18 @@ fun GameCard(
                 IconButton(onClick = onEditClick) {
                     Icon(
                         Icons.Default.Edit,
-                        contentDescription = "Editar juego",
+                        contentDescription = stringResource(R.string.edit_accessibility),
                         tint = MoradoColor
                     )
                 }
                 IconButton(onClick = onDeleteClick) {
                     Icon(
                         Icons.Default.DeleteOutline,
-                        contentDescription = "Eliminar juego",
+                        contentDescription = stringResource(R.string.delete_accessibility),
                         tint = TextoSecundarioColor
                     )
                 }
             }
         }
     }
-}
-
-private fun String?.isNull_or_empty_or_blank(): Boolean {
-    return this.isNullOrBlank()
 }

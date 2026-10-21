@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.example.gamerent.R
 
 private val FondoColor = Color(0xFF101522)
 private val TarjetaColor = Color(0xFF1C2638)
@@ -51,7 +53,7 @@ fun ProfileScreen(
         ) {
             Icon(
                 Icons.Default.Person,
-                contentDescription = "Perfil",
+                contentDescription = stringResource(R.string.profile_icon_accessibility),
                 tint = MoradoColor,
                 modifier = Modifier.size(54.dp)
             )
@@ -59,13 +61,13 @@ fun ProfileScreen(
 
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = "Perfil GameRent",
+                text = stringResource(R.string.profile_title),
                 color = TextoColor,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Catálogo de alquiler para PS4 y PS5",
+                text = stringResource(R.string.profile_subtitle),
                 color = TextoSecundarioColor,
                 fontSize = 14.sp
             )
@@ -75,7 +77,7 @@ fun ProfileScreen(
 
         // Tarjetas Estadísticas de Alquiler
         Text(
-            text = "Estadísticas del sistema",
+            text = stringResource(R.string.system_stats),
             color = TextoColor,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
@@ -87,13 +89,13 @@ fun ProfileScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             StatItem(
-                titulo = "Registrados",
+                titulo = stringResource(R.string.registered),
                 valor = "$totalJuegos",
                 icono = Icons.Default.SportsEsports,
                 modifier = Modifier.weight(1f)
             )
             StatItem(
-                titulo = "Disponibles",
+                titulo = stringResource(R.string.available_count),
                 valor = "$juegosDisponibles",
                 icono = Icons.Default.CheckCircle,
                 modifier = Modifier.weight(1f)
@@ -101,8 +103,8 @@ fun ProfileScreen(
         }
 
         StatItem(
-            titulo = "Base de datos local",
-            valor = "Room SQLite Activa",
+            titulo = stringResource(R.string.local_database),
+            valor = stringResource(R.string.room_database),
             icono = Icons.Default.Storage,
             modifier = Modifier.fillMaxWidth()
         )
@@ -110,7 +112,7 @@ fun ProfileScreen(
         Spacer(Modifier.weight(1f))
 
         Text(
-            text = "GameRent App v1.0 • Proyecto Académico",
+            text = stringResource(R.string.profile_footer),
             color = TextoSecundarioColor,
             fontSize = 12.sp
         )
