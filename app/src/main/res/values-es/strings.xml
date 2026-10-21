@@ -98,4 +98,7 @@
     <string name="availability_available">Disponibles</string>
     <string name="availability_unavailable">No disponibles</string>
     <string name="weekday_hours">Lun–Sáb: %1$s</string>
+    <string name="language_label">Idioma de la aplicación</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_english">English</string>
 </resources>

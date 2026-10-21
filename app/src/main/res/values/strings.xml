@@ -98,4 +98,7 @@
     <string name="availability_available">Available</string>
     <string name="availability_unavailable">Unavailable</string>
     <string name="weekday_hours">Mon–Sat: %1$s</string>
+    <string name="language_label">App language</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_english">English</string>
 </resources>

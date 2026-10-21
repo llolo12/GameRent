@@ -2,6 +2,9 @@ package com.example.gamerent.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import android.app.Application
+import android.content.res.Configuration
+import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.AndroidViewModel
 import com.example.gamerent.domain.repository.GameRepository
 import com.example.gamerent.model.Consolas
@@ -144,7 +147,7 @@ class GameViewModel(application: Application, private val repository: GameReposi
     ) {
         val nombreLimpio = nombre.trim()
         if (nombreLimpio.isBlank()) {
-            mostrarError(getApplication<Application>().getString(com.example.gamerent.R.string.name_required_error))
+            mostrarError(localizedString(com.example.gamerent.R.string.name_required_error))
             return
         }
 
@@ -176,7 +179,7 @@ class GameViewModel(application: Application, private val repository: GameReposi
                 }
                 cerrarFormulario()
             } catch (e: Exception) {
-                mostrarError(getApplication<Application>().getString(com.example.gamerent.R.string.save_game_error, e.localizedMessage.orEmpty()))
+                mostrarError(localizedString(com.example.gamerent.R.string.save_game_error, e.localizedMessage.orEmpty()))
             }
         }
     }
@@ -188,8 +191,22 @@ class GameViewModel(application: Application, private val repository: GameReposi
                 repository.eliminarVideojuego(juego)
                 _juegoEliminar.value = null
             } catch (e: Exception) {
-                mostrarError(getApplication<Application>().getString(com.example.gamerent.R.string.delete_game_error, e.localizedMessage.orEmpty()))
+                mostrarError(localizedString(com.example.gamerent.R.string.delete_game_error, e.localizedMessage.orEmpty()))
             }
         }
+    }
+
+    private fun localizedString(resourceId: Int, vararg arguments: Any): String {
+        val application = getApplication<Application>()
+        val languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags()
+        val localizedContext = if (languageTags.isEmpty()) {
+            application
+        } else {
+            val configuration = Configuration(application.resources.configuration).apply {
+                setLocales(LocaleList.forLanguageTags(languageTags))
+            }
+            application.createConfigurationContext(configuration)
+        }
+        return localizedContext.getString(resourceId, *arguments)
     }
 }

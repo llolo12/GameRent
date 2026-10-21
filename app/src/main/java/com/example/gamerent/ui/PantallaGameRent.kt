@@ -27,7 +27,10 @@ private val MoradoColor = Color(0xFF8B72FF)
 private val TextoSecundarioColor = Color(0xFFADB8CC)
 
 @Composable
-fun PantallaGameRent(viewModel: GameViewModel) {
+fun PantallaGameRent(
+    viewModel: GameViewModel,
+    onLanguageSelected: (String) -> Unit
+) {
     val busqueda by viewModel.busqueda.collectAsState()
     val consola by viewModel.consola.collectAsState()
     val genero by viewModel.genero.collectAsState()
@@ -98,7 +101,8 @@ fun PantallaGameRent(viewModel: GameViewModel) {
             "profile" -> ProfileScreen(
                 totalJuegos = todosLosJuegos.size,
                 juegosDisponibles = todosLosJuegos.count { it.disponible },
-                paddingValues = padding
+                paddingValues = padding,
+                onLanguageSelected = onLanguageSelected
             )
         }
     }

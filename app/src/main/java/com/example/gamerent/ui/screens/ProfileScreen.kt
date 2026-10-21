@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalConfiguration
 import com.example.gamerent.R
 
 private val FondoColor = Color(0xFF101522)
@@ -32,8 +33,10 @@ private val TextoSecundarioColor = Color(0xFFADB8CC)
 fun ProfileScreen(
     totalJuegos: Int,
     juegosDisponibles: Int,
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    onLanguageSelected: (String) -> Unit
 ) {
+    val currentLanguage = LocalConfiguration.current.locales[0].language
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -108,6 +111,29 @@ fun ProfileScreen(
             icono = Icons.Default.Storage,
             modifier = Modifier.fillMaxWidth()
         )
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.language_label),
+                color = TextoColor,
+                fontWeight = FontWeight.SemiBold
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(
+                    selected = currentLanguage == "es",
+                    onClick = { onLanguageSelected("es") },
+                    label = { Text(stringResource(R.string.language_spanish)) }
+                )
+                FilterChip(
+                    selected = currentLanguage == "en",
+                    onClick = { onLanguageSelected("en") },
+                    label = { Text(stringResource(R.string.language_english)) }
+                )
+            }
+        }
 
         Spacer(Modifier.weight(1f))
 
