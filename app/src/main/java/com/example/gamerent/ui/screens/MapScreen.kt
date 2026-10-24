@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.example.gamerent.R
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
@@ -43,7 +45,7 @@ val sucursales = listOf(
         id = 1,
         nombre = "GameRent Central",
         direccion = "Av. Corrientes 1234, Centro",
-        horario = "Lun a Sáb: 10:00 - 20:00",
+        horario = "10:00 - 20:00",
         telefono = "+54 11 4567-8901",
         ubicacion = LatLng(-34.6037, -58.3816)
     ),
@@ -51,7 +53,7 @@ val sucursales = listOf(
         id = 2,
         nombre = "GameRent Norte",
         direccion = "Av. Cabildo 2450, Belgrano",
-        horario = "Lun a Sáb: 10:00 - 21:00",
+        horario = "10:00 - 21:00",
         telefono = "+54 11 4567-8902",
         ubicacion = LatLng(-34.5615, -58.4560)
     ),
@@ -59,7 +61,7 @@ val sucursales = listOf(
         id = 3,
         nombre = "GameRent Sur",
         direccion = "Av. Montes de Oca 890, Barracas",
-        horario = "Lun a Sáb: 10:00 - 19:30",
+        horario = "10:00 - 19:30",
         telefono = "+54 11 4567-8903",
         ubicacion = LatLng(-34.6300, -58.3700)
     )
@@ -103,14 +105,14 @@ fun MapScreen(
                     modifier = Modifier.size(28.dp)
                 )
                 Text(
-                    text = "Sucursales de Alquiler",
+                    text = stringResource(R.string.branches_title),
                     color = TextoColor,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
             Text(
-                text = "Encontrá la tienda GameRent más cercana para retirar tus juegos.",
+                text = stringResource(R.string.branch_subtitle),
                 color = TextoSecundarioColor,
                 fontSize = 13.sp
             )
@@ -131,12 +133,12 @@ fun MapScreen(
             ) {
                 Icon(
                     Icons.Default.Info,
-                    contentDescription = "Info API Key",
+                    contentDescription = stringResource(R.string.maps_api_accessibility),
                     tint = MoradoColor,
                     modifier = Modifier.size(20.dp)
                 )
                 Text(
-                    text = "Para activar el renderizado 3D de Google Maps, agregá tu MAPS_API_KEY en AndroidManifest.xml o local.properties.",
+                    text = stringResource(R.string.maps_api_notice),
                     color = TextoColor,
                     fontSize = 11.sp
                 )
@@ -182,7 +184,7 @@ fun MapScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "Seleccionar sucursal:",
+                text = stringResource(R.string.select_branch),
                 color = TextoColor,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold
@@ -234,7 +236,7 @@ fun MapScreen(
                         fontSize = 13.sp
                     )
                     Text(
-                        text = "🕒 ${sucursalSeleccionada.horario}",
+                        text = "🕒 ${stringResource(R.string.weekday_hours, sucursalSeleccionada.horario)}",
                         color = TextoSecundarioColor,
                         fontSize = 13.sp
                     )

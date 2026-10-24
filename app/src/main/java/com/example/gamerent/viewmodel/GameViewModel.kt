@@ -1,53 +1,57 @@
 package com.example.gamerent.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.gamerent.data.repository.VideojuegoRepository
-import com.example.gamerent.model.Consolas
-import com.example.gamerent.model.FiltroDisponibilidad
-import com.example.gamerent.model.Generos
-import com.example.gamerent.model.Videojuego
+import android.app.Application
+import android.content.res.Configuration
+import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.AndroidViewModel
+import com.example.gamerent.domain.repository.GameRepository
+import com.example.gamerent.domain.model.Consoles
+import com.example.gamerent.domain.model.AvailabilityFilter
+import com.example.gamerent.domain.model.Genres
+import com.example.gamerent.domain.model.VideoGame
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() {
+class GameViewModel(application: Application, private val repository: GameRepository) : AndroidViewModel(application) {
 
     private val _busqueda = MutableStateFlow("")
     val busqueda: StateFlow<String> = _busqueda.asStateFlow()
 
-    private val _consola = MutableStateFlow(Consolas.TODAS)
+    private val _consola = MutableStateFlow(Consoles.TODAS)
     val consola: StateFlow<String> = _consola.asStateFlow()
 
-    private val _genero = MutableStateFlow(Generos.TODOS)
+    private val _genero = MutableStateFlow(Genres.TODOS)
     val genero: StateFlow<String> = _genero.asStateFlow()
 
-    private val _disponibilidad = MutableStateFlow(FiltroDisponibilidad.TODOS)
-    val disponibilidad: StateFlow<FiltroDisponibilidad> = _disponibilidad.asStateFlow()
+    private val _disponibilidad = MutableStateFlow(AvailabilityFilter.TODOS)
+    val disponibilidad: StateFlow<AvailabilityFilter> = _disponibilidad.asStateFlow()
 
     private val _mostrarFormulario = MutableStateFlow(false)
     val mostrarFormulario: StateFlow<Boolean> = _mostrarFormulario.asStateFlow()
 
-    private val _juegoEditar = MutableStateFlow<Videojuego?>(null)
-    val juegoEditar: StateFlow<Videojuego?> = _juegoEditar.asStateFlow()
+    private val _juegoEditar = MutableStateFlow<VideoGame?>(null)
+    val juegoEditar: StateFlow<VideoGame?> = _juegoEditar.asStateFlow()
 
-    private val _juegoEliminar = MutableStateFlow<Videojuego?>(null)
-    val juegoEliminar: StateFlow<Videojuego?> = _juegoEliminar.asStateFlow()
+    private val _juegoEliminar = MutableStateFlow<VideoGame?>(null)
+    val juegoEliminar: StateFlow<VideoGame?> = _juegoEliminar.asStateFlow()
 
-    private val _juegoDetalle = MutableStateFlow<Videojuego?>(null)
-    val juegoDetalle: StateFlow<Videojuego?> = _juegoDetalle.asStateFlow()
+    private val _juegoDetalle = MutableStateFlow<VideoGame?>(null)
+    val juegoDetalle: StateFlow<VideoGame?> = _juegoDetalle.asStateFlow()
 
     private val _mensajeError = MutableStateFlow<String?>(null)
     val mensajeError: StateFlow<String?> = _mensajeError.asStateFlow()
 
-    val todosLosJuegos: StateFlow<List<Videojuego>> = repository.todosLosVideojuegos
+    val todosLosJuegos: StateFlow<List<VideoGame>> = repository.todosLosVideoGames
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
             initialValue = emptyList()
         )
 
-    val juegosFiltrados: StateFlow<List<Videojuego>> = combine(
-        repository.todosLosVideojuegos,
+    val juegosFiltrados: StateFlow<List<VideoGame>> = combine(
+        repository.todosLosVideoGames,
         _busqueda,
         _consola,
         _genero,
@@ -55,12 +59,12 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
     ) { juegos, query, consolaSel, generoSel, dispSel ->
         juegos.filter { juego ->
             val coincideNombre = juego.nombre.contains(query.trim(), ignoreCase = true)
-            val coincideConsola = consolaSel == Consolas.TODAS || juego.consola.equals(consolaSel, ignoreCase = true)
-            val coincideGenero = generoSel == Generos.TODOS || juego.genero.equals(generoSel, ignoreCase = true)
+            val coincideConsola = consolaSel == Consoles.TODAS || juego.consola.equals(consolaSel, ignoreCase = true)
+            val coincideGenero = generoSel == Genres.TODOS || juego.genero.equals(generoSel, ignoreCase = true)
             val coincideDisp = when (dispSel) {
-                FiltroDisponibilidad.TODOS -> true
-                FiltroDisponibilidad.DISPONIBLES -> juego.disponible
-                FiltroDisponibilidad.NO_DISPONIBLES -> !juego.disponible
+                AvailabilityFilter.TODOS -> true
+                AvailabilityFilter.DISPONIBLES -> juego.disponible
+                AvailabilityFilter.NO_DISPONIBLES -> !juego.disponible
             }
             coincideNombre && coincideConsola && coincideGenero && coincideDisp
         }
@@ -82,15 +86,15 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
         _genero.value = nuevoGenero
     }
 
-    fun onDisponibilidadChanged(nuevaDisp: FiltroDisponibilidad) {
+    fun onDisponibilidadChanged(nuevaDisp: AvailabilityFilter) {
         _disponibilidad.value = nuevaDisp
     }
 
     fun resetFiltros() {
         _busqueda.value = ""
-        _consola.value = Consolas.TODAS
-        _genero.value = Generos.TODOS
-        _disponibilidad.value = FiltroDisponibilidad.TODOS
+        _consola.value = Consoles.TODAS
+        _genero.value = Genres.TODOS
+        _disponibilidad.value = AvailabilityFilter.TODOS
     }
 
     fun abrirFormularioNuevo() {
@@ -98,7 +102,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
         _mostrarFormulario.value = true
     }
 
-    fun abrirFormularioEdicion(videojuego: Videojuego) {
+    fun abrirFormularioEdicion(videojuego: VideoGame) {
         _juegoEditar.value = videojuego
         _mostrarFormulario.value = true
     }
@@ -108,7 +112,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
         _juegoEditar.value = null
     }
 
-    fun solicitarEliminacion(videojuego: Videojuego) {
+    fun solicitarEliminacion(videojuego: VideoGame) {
         _juegoEliminar.value = videojuego
     }
 
@@ -116,7 +120,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
         _juegoEliminar.value = null
     }
 
-    fun verDetalle(videojuego: Videojuego) {
+    fun verDetalle(videojuego: VideoGame) {
         _juegoDetalle.value = videojuego
     }
 
@@ -132,7 +136,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
         _mensajeError.value = null
     }
 
-    fun guardarVideojuego(
+    fun guardarVideoGame(
         nombre: String,
         consola: String,
         genero: String,
@@ -143,7 +147,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
     ) {
         val nombreLimpio = nombre.trim()
         if (nombreLimpio.isBlank()) {
-            mostrarError("El nombre del videojuego no puede estar vacío.")
+            mostrarError(localizedString(com.example.gamerent.R.string.name_required_error))
             return
         }
 
@@ -151,7 +155,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
             try {
                 val actual = _juegoEditar.value
                 if (actual == null) {
-                    val nuevo = Videojuego(
+                    val nuevo = VideoGame(
                         nombre = nombreLimpio,
                         consola = consola,
                         genero = genero,
@@ -160,7 +164,7 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
                         mediaType = mediaType,
                         precioAlquiler = precioAlquiler
                     )
-                    repository.agregarVideojuego(nuevo)
+                    repository.agregarVideoGame(nuevo)
                 } else {
                     val editado = actual.copy(
                         nombre = nombreLimpio,
@@ -171,11 +175,11 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
                         mediaType = mediaType,
                         precioAlquiler = precioAlquiler
                     )
-                    repository.actualizarVideojuego(editado)
+                    repository.actualizarVideoGame(editado)
                 }
                 cerrarFormulario()
             } catch (e: Exception) {
-                mostrarError("Error al guardar el videojuego: ${e.localizedMessage}")
+                mostrarError(localizedString(com.example.gamerent.R.string.save_game_error, e.localizedMessage.orEmpty()))
             }
         }
     }
@@ -184,11 +188,25 @@ class GameViewModel(private val repository: VideojuegoRepository) : ViewModel() 
         val juego = _juegoEliminar.value ?: return
         viewModelScope.launch {
             try {
-                repository.eliminarVideojuego(juego)
+                repository.eliminarVideoGame(juego)
                 _juegoEliminar.value = null
             } catch (e: Exception) {
-                mostrarError("Error al eliminar el videojuego: ${e.localizedMessage}")
+                mostrarError(localizedString(com.example.gamerent.R.string.delete_game_error, e.localizedMessage.orEmpty()))
             }
         }
+    }
+
+    private fun localizedString(resourceId: Int, vararg arguments: Any): String {
+        val application = getApplication<Application>()
+        val languageTags = AppCompatDelegate.getApplicationLocales().toLanguageTags()
+        val localizedContext = if (languageTags.isEmpty()) {
+            application
+        } else {
+            val configuration = Configuration(application.resources.configuration).apply {
+                setLocales(LocaleList.forLanguageTags(languageTags))
+            }
+            application.createConfigurationContext(configuration)
+        }
+        return localizedContext.getString(resourceId, *arguments)
     }
 }

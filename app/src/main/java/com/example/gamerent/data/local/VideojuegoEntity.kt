@@ -2,10 +2,10 @@ package com.example.gamerent.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.gamerent.model.Videojuego
+import com.example.gamerent.domain.model.VideoGame
 
 @Entity(tableName = "videojuegos")
-data class VideojuegoEntity(
+data class VideoGameEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val nombre: String,
@@ -17,7 +17,7 @@ data class VideojuegoEntity(
     val precioAlquiler: Double = 5.0
 )
 
-fun VideojuegoEntity.toDomain(): Videojuego = Videojuego(
+fun VideoGameEntity.toDomain(): VideoGame = VideoGame(
     id = id,
     nombre = nombre,
     consola = consola,
@@ -28,7 +28,7 @@ fun VideojuegoEntity.toDomain(): Videojuego = Videojuego(
     precioAlquiler = precioAlquiler
 )
 
-fun Videojuego.toEntity(): VideojuegoEntity = VideojuegoEntity(
+fun VideoGame.toEntity(): VideoGameEntity = VideoGameEntity(
     id = id,
     nombre = nombre,
     consola = consola,

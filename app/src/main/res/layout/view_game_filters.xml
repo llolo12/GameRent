@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/game_filters_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/game_rent_surface"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <EditText
+        android:id="@+id/edit_game_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_game"
+        android:inputType="text"
+        android:singleLine="true"
+        android:textColor="@color/game_rent_text"
+        android:textColorHint="@color/game_rent_secondary_text" />
+    <Spinner
+        android:id="@+id/spinner_console"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/console" />
+    <Spinner
+        android:id="@+id/spinner_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/genre" />
+    <Spinner
+        android:id="@+id/spinner_availability"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/availability" />
+    <Button
+        android:id="@+id/button_clear_filters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/clear_filters" />
+</LinearLayout>

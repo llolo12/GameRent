@@ -1,9 +1,9 @@
-package com.example.gamerent.model
+package com.example.gamerent.domain.model
 
 /**
  * Modelo de dominio que representa un videojuego en el catálogo de GameRent.
  */
-data class Videojuego(
+data class VideoGame(
     val id: Int = 0,
     val nombre: String,
     val consola: String,
@@ -14,7 +14,7 @@ data class Videojuego(
     val precioAlquiler: Double = 5.0
 )
 
-object Consolas {
+object Consoles {
     const val TODAS = "Todas"
     const val PS4 = "PS4"
     const val PS5 = "PS5"
@@ -22,7 +22,7 @@ object Consolas {
     val opcionesFormulario = listOf(PS4, PS5)
 }
 
-object Generos {
+object Genres {
     const val TODOS = "Todos"
     const val ACCION = "Acción"
     const val AVENTURA = "Aventura"
@@ -34,8 +34,8 @@ object Generos {
     val opcionesFormulario = listOf(ACCION, AVENTURA, CARRERAS, RPG, DEPORTES, ESTRATEGIA)
 }
 
-enum class FiltroDisponibilidad(val titulo: String) {
-    TODOS("Todos"),
-    DISPONIBLES("Disponibles"),
-    NO_DISPONIBLES("No disponibles")
+enum class AvailabilityFilter {
+    TODOS,
+    DISPONIBLES,
+    NO_DISPONIBLES
 }

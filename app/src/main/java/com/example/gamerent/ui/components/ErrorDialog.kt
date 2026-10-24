@@ -4,6 +4,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.example.gamerent.R
 
 @Composable
 fun ErrorDialog(
@@ -12,11 +14,11 @@ fun ErrorDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Atención") },
+        title = { Text(stringResource(R.string.error_title)) },
         text = { Text(mensaje) },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Aceptar")
+                Text(stringResource(R.string.ok))
             }
         }
     )
