@@ -101,4 +101,5 @@
     <string name="language_label">App language</string>
     <string name="language_spanish">Español</string>
     <string name="language_english">English</string>
+    <string name="camera_permission_denied">Camera permission was denied. Allow camera access in Settings to take a photo.</string>
 </resources>

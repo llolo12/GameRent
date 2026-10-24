@@ -1,5 +1,7 @@
 package com.example.gamerent.ui.components
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -28,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
 import com.example.gamerent.model.Consolas
@@ -76,6 +79,34 @@ fun AddEditGameDialog(
             mediaTypeState = "IMAGE"
         } else {
             onError(context.getString(R.string.camera_capture_error))
+        }
+    }
+
+    fun launchCamera() {
+        try {
+            val tempFile = File.createTempFile("game_photo_", ".jpg", context.cacheDir).apply {
+                createNewFile()
+                deleteOnExit()
+            }
+            val uri = FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.fileprovider",
+                tempFile
+            )
+            tempCameraUri = uri
+            cameraLauncher.launch(uri)
+        } catch (e: Exception) {
+            onError(context.getString(R.string.camera_start_error, e.localizedMessage.orEmpty()))
+        }
+    }
+
+    val cameraPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            launchCamera()
+        } else {
+            onError(context.getString(R.string.camera_permission_denied))
         }
     }
 
@@ -182,20 +213,10 @@ fun AddEditGameDialog(
                     // Botón Cámara
                     OutlinedButton(
                         onClick = {
-                            try {
-                                val tempFile = File.createTempFile("game_photo_", ".jpg", context.cacheDir).apply {
-                                    createNewFile()
-                                    deleteOnExit()
-                                }
-                                val uri = FileProvider.getUriForFile(
-                                    context,
-                                    "${context.packageName}.fileprovider",
-                                    tempFile
-                                )
-                                tempCameraUri = uri
-                                cameraLauncher.launch(uri)
-                            } catch (e: Exception) {
-                                onError(context.getString(R.string.camera_start_error, e.localizedMessage.orEmpty()))
+                            if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                                launchCamera()
+                            } else {
+                                cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
                             }
                         },
                         modifier = Modifier.weight(1f),
