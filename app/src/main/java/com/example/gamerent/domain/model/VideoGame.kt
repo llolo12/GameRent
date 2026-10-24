@@ -34,8 +34,8 @@ object Genres {
     val opcionesFormulario = listOf(ACCION, AVENTURA, CARRERAS, RPG, DEPORTES, ESTRATEGIA)
 }
 
-enum class AvailabilityFilter(val titulo: String) {
-    TODOS("Todos"),
-    DISPONIBLES("Disponibles"),
-    NO_DISPONIBLES("No disponibles")
+enum class AvailabilityFilter {
+    TODOS,
+    DISPONIBLES,
+    NO_DISPONIBLES
 }

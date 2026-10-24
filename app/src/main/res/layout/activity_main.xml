@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/game_rent_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/game_rent_surface"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/navigation_home"
+                style="@style/GameRent.NavigationButton"
+                android:text="@string/nav_home" />
+            <Button
+                android:id="@+id/navigation_catalog"
+                style="@style/GameRent.NavigationButton"
+                android:text="@string/nav_catalog" />
+            <Button
+                android:id="@+id/navigation_add"
+                style="@style/GameRent.NavigationButton"
+                android:text="@string/nav_add" />
+            <Button
+                android:id="@+id/navigation_map"
+                style="@style/GameRent.NavigationButton"
+                android:text="@string/nav_map" />
+            <Button
+                android:id="@+id/navigation_profile"
+                style="@style/GameRent.NavigationButton"
+                android:text="@string/nav_profile" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/legacy_dialog_host"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_gravity="top|start"
+        android:importantForAccessibility="no"
+        android:clickable="false"
+        android:focusable="false" />
+</FrameLayout>

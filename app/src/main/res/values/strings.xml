@@ -15,8 +15,6 @@
     <string name="empty_search">No games match your search.</string>
     <string name="search_game">Search games by name...</string>
     <string name="search">Search</string>
-    <string name="clear_search">Clear search</string>
-    <string name="combined_filters">Combined filters</string>
     <string name="clear_filters">Clear filters</string>
     <string name="console">Console:</string>
     <string name="genre">Genre:</string>
@@ -48,10 +46,7 @@
     <string name="status">Status:</string>
     <string name="available_for_rent_status">Available for rent</string>
     <string name="unavailable_status">Currently unavailable</string>
-    <string name="add_game_accessibility">Add game</string>
     <string name="video_accessibility">Video</string>
-    <string name="edit_accessibility">Edit game</string>
-    <string name="delete_accessibility">Delete game</string>
     <string name="error_title">Notice</string>
     <string name="ok">OK</string>
     <string name="console_label">Console</string>
@@ -73,7 +68,6 @@
     <string name="maps_api_notice">To enable Google Maps 3D rendering, add MAPS_API_KEY to AndroidManifest.xml or local.properties.</string>
     <string name="select_branch">Select a store:</string>
     <string name="profile_footer">GameRent App v1.0 • Academic Project</string>
-    <string name="games_icon_accessibility">Games</string>
     <string name="profile_icon_accessibility">Profile</string>
     <string name="photo_preview_accessibility">Media preview</string>
     <string name="selected_video_accessibility">Selected video</string>
@@ -102,4 +96,5 @@
     <string name="language_spanish">Español</string>
     <string name="language_english">English</string>
     <string name="camera_permission_denied">Camera permission was denied. Allow camera access in Settings to take a photo.</string>
+    <string name="game_console_genre">%1$s • %2$s</string>
 </resources>

@@ -19,7 +19,4 @@ interface VideoGameDao {
 
     @Delete
     suspend fun deleteVideoGame(videojuego: VideoGameEntity)
-
-    @Query("SELECT COUNT(*) FROM videojuegos")
-    suspend fun getCount(): Int
 }
