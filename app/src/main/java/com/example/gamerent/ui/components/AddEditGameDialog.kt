@@ -33,9 +33,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
-import com.example.gamerent.model.Consolas
-import com.example.gamerent.model.Generos
-import com.example.gamerent.model.Videojuego
+import com.example.gamerent.domain.model.Consoles
+import com.example.gamerent.domain.model.Genres
+import com.example.gamerent.domain.model.VideoGame
 import com.example.gamerent.R
 import java.io.File
 
@@ -44,7 +44,7 @@ private val TextoSecundarioColor = Color(0xFFADB8CC)
 
 @Composable
 fun AddEditGameDialog(
-    juegoEditar: Videojuego?,
+    juegoEditar: VideoGame?,
     onDismiss: () -> Unit,
     onSave: (
         nombre: String,
@@ -60,8 +60,8 @@ fun AddEditGameDialog(
     val context = LocalContext.current
 
     var nombre by remember { mutableStateOf(juegoEditar?.nombre ?: "") }
-    var consola by remember { mutableStateOf(juegoEditar?.consola ?: Consolas.PS5) }
-    var genero by remember { mutableStateOf(juegoEditar?.genero ?: Generos.ACCION) }
+    var consola by remember { mutableStateOf(juegoEditar?.consola ?: Consoles.PS5) }
+    var genero by remember { mutableStateOf(juegoEditar?.genero ?: Genres.ACCION) }
     var disponible by remember { mutableStateOf(juegoEditar?.disponible ?: true) }
     var precioTexto by remember { mutableStateOf((juegoEditar?.precioAlquiler ?: 5.0).toString()) }
     var mediaUriState by remember { mutableStateOf(juegoEditar?.mediaUri) }
@@ -161,7 +161,7 @@ fun AddEditGameDialog(
                 // Consola
                 Text(stringResource(R.string.console_label), fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(Consolas.opcionesFormulario) { opcion ->
+                    items(Consoles.opcionesFormulario) { opcion ->
                         val selected = consola.equals(opcion, ignoreCase = true)
                         FilterChip(
                             selected = selected,
@@ -177,7 +177,7 @@ fun AddEditGameDialog(
                 // Género
                 Text(stringResource(R.string.genre_label), fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(Generos.opcionesFormulario) { opcion ->
+                    items(Genres.opcionesFormulario) { opcion ->
                         val selected = genero.equals(opcion, ignoreCase = true)
                         FilterChip(
                             selected = selected,

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.example.gamerent.R
-import com.example.gamerent.model.Videojuego
+import com.example.gamerent.domain.model.VideoGame
 
 private val TarjetaColor = Color(0xFF1C2638)
 private val MoradoColor = Color(0xFF8B72FF)
@@ -28,7 +28,7 @@ private val TextoSecundarioColor = Color(0xFFADB8CC)
 
 @Composable
 fun GameCard(
-    videojuego: Videojuego,
+    videojuego: VideoGame,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onCardClick: () -> Unit,

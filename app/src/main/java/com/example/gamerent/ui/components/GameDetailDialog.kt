@@ -19,14 +19,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import com.example.gamerent.R
-import com.example.gamerent.model.Videojuego
+import com.example.gamerent.domain.model.VideoGame
 
 private val MoradoColor = Color(0xFF8B72FF)
 private val TextoSecundarioColor = Color(0xFFADB8CC)
 
 @Composable
 fun GameDetailDialog(
-    videojuego: Videojuego,
+    videojuego: VideoGame,
     onDismiss: () -> Unit
 ) {
     AlertDialog(

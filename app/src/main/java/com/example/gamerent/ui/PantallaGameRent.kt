@@ -107,13 +107,13 @@ fun PantallaGameRent(
         }
     }
 
-    // Diálogo para Agregar / Editar Videojuego
+    // Diálogo para Agregar / Editar VideoGame
     if (mostrarFormulario) {
         AddEditGameDialog(
             juegoEditar = juegoEditar,
             onDismiss = { viewModel.cerrarFormulario() },
             onSave = { nombre, cons, gen, disp, uri, type, precio ->
-                viewModel.guardarVideojuego(
+                viewModel.guardarVideoGame(
                     nombre = nombre,
                     consola = cons,
                     genero = gen,
@@ -136,7 +136,7 @@ fun PantallaGameRent(
         )
     }
 
-    // Diálogo de Detalle del Videojuego
+    // Diálogo de Detalle del VideoGame
     juegoDetalle?.let { juego ->
         GameDetailDialog(
             videojuego = juego,

@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
 import com.example.gamerent.R
-import com.example.gamerent.model.Consolas
-import com.example.gamerent.model.FiltroDisponibilidad
-import com.example.gamerent.model.Generos
+import com.example.gamerent.domain.model.Consoles
+import com.example.gamerent.domain.model.AvailabilityFilter
+import com.example.gamerent.domain.model.Genres
 
 private val MoradoColor = Color(0xFF8B72FF)
 private val TextoColor = Color(0xFFF5F6FA)
@@ -35,8 +35,8 @@ fun FilterSection(
     onConsolaChange: (String) -> Unit,
     generoSeleccionado: String,
     onGeneroChange: (String) -> Unit,
-    disponibilidadSeleccionada: FiltroDisponibilidad,
-    onDisponibilidadChange: (FiltroDisponibilidad) -> Unit,
+    disponibilidadSeleccionada: AvailabilityFilter,
+    onDisponibilidadChange: (AvailabilityFilter) -> Unit,
     onResetFiltros: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -106,11 +106,11 @@ fun FilterSection(
             }
         }
 
-        // Filtro Consolas (PS4, PS5, Todas)
+        // Filtro Consoles (PS4, PS5, Todas)
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(stringResource(R.string.console), color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(Consolas.lista) { opcion ->
+                items(Consoles.lista) { opcion ->
                     val selected = consolaSeleccionada.equals(opcion, ignoreCase = true)
                     FilterChip(
                         selected = selected,
@@ -134,7 +134,7 @@ fun FilterSection(
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(stringResource(R.string.genre), color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(Generos.lista) { opcion ->
+                items(Genres.lista) { opcion ->
                     val selected = generoSeleccionado.equals(opcion, ignoreCase = true)
                     FilterChip(
                         selected = selected,
@@ -158,15 +158,15 @@ fun FilterSection(
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(stringResource(R.string.availability), color = TextoSecundarioColor, fontSize = 12.sp, fontWeight = FontWeight.Medium)
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(FiltroDisponibilidad.entries) { opcion ->
+                items(AvailabilityFilter.entries) { opcion ->
                     val selected = disponibilidadSeleccionada == opcion
                     FilterChip(
                         selected = selected,
                         onClick = { onDisponibilidadChange(opcion) },
                         label = { Text(stringResource(when (opcion) {
-                            FiltroDisponibilidad.TODOS -> R.string.availability_all
-                            FiltroDisponibilidad.DISPONIBLES -> R.string.availability_available
-                            FiltroDisponibilidad.NO_DISPONIBLES -> R.string.availability_unavailable
+                            AvailabilityFilter.TODOS -> R.string.availability_all
+                            AvailabilityFilter.DISPONIBLES -> R.string.availability_available
+                            AvailabilityFilter.NO_DISPONIBLES -> R.string.availability_unavailable
                         })) },
                         leadingIcon = if (selected) {
                             { Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp)) }

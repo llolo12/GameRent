@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.stringResource
 import com.example.gamerent.R
-import com.example.gamerent.model.Videojuego
+import com.example.gamerent.domain.model.VideoGame
 import com.example.gamerent.ui.components.FilterSection
 import com.example.gamerent.ui.components.GameCard
 import com.example.gamerent.viewmodel.GameViewModel
@@ -35,7 +35,7 @@ fun CatalogScreen(
     busqueda: String,
     consola: String,
     genero: String,
-    juegosFiltrados: List<Videojuego>,
+    juegosFiltrados: List<VideoGame>,
     paddingValues: PaddingValues
 ) {
     val disponibilidad by viewModel.disponibilidad.collectAsState()

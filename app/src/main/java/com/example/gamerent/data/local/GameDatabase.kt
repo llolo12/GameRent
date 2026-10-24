@@ -9,10 +9,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [VideojuegoEntity::class], version = 1, exportSchema = false)
+@Database(entities = [VideoGameEntity::class], version = 1, exportSchema = false)
 abstract class GameDatabase : RoomDatabase() {
 
-    abstract fun videojuegoDao(): VideojuegoDao
+    abstract fun videojuegoDao(): VideoGameDao
 
     companion object {
         @Volatile
@@ -42,14 +42,14 @@ abstract class GameDatabase : RoomDatabase() {
                 }
             }
 
-            suspend fun populateDatabase(dao: VideojuegoDao) {
+            suspend fun populateDatabase(dao: VideoGameDao) {
                 val juegosIniciales = listOf(
-                    VideojuegoEntity(nombre = "God of War Ragnarök", consola = "PS5", genero = "Aventura", disponible = true, precioAlquiler = 7.50),
-                    VideojuegoEntity(nombre = "Spider-Man 2", consola = "PS5", genero = "Acción", disponible = true, precioAlquiler = 8.00),
-                    VideojuegoEntity(nombre = "Gran Turismo 7", consola = "PS5", genero = "Carreras", disponible = false, precioAlquiler = 6.00),
-                    VideojuegoEntity(nombre = "God of War", consola = "PS4", genero = "Aventura", disponible = true, precioAlquiler = 4.50),
-                    VideojuegoEntity(nombre = "Ghost of Tsushima", consola = "PS4", genero = "Acción", disponible = true, precioAlquiler = 5.00),
-                    VideojuegoEntity(nombre = "Crash Team Racing", consola = "PS4", genero = "Carreras", disponible = false, precioAlquiler = 3.50)
+                    VideoGameEntity(nombre = "God of War Ragnarök", consola = "PS5", genero = "Aventura", disponible = true, precioAlquiler = 7.50),
+                    VideoGameEntity(nombre = "Spider-Man 2", consola = "PS5", genero = "Acción", disponible = true, precioAlquiler = 8.00),
+                    VideoGameEntity(nombre = "Gran Turismo 7", consola = "PS5", genero = "Carreras", disponible = false, precioAlquiler = 6.00),
+                    VideoGameEntity(nombre = "God of War", consola = "PS4", genero = "Aventura", disponible = true, precioAlquiler = 4.50),
+                    VideoGameEntity(nombre = "Ghost of Tsushima", consola = "PS4", genero = "Acción", disponible = true, precioAlquiler = 5.00),
+                    VideoGameEntity(nombre = "Crash Team Racing", consola = "PS4", genero = "Carreras", disponible = false, precioAlquiler = 3.50)
                 )
                 dao.insertAll(juegosIniciales)
             }

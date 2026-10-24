@@ -4,21 +4,21 @@ import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface VideojuegoDao {
+interface VideoGameDao {
     @Query("SELECT * FROM videojuegos ORDER BY id DESC")
-    fun getAllVideojuegos(): Flow<List<VideojuegoEntity>>
+    fun getAllVideoGames(): Flow<List<VideoGameEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertVideojuego(videojuego: VideojuegoEntity): Long
+    suspend fun insertVideoGame(videojuego: VideoGameEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(videojuegos: List<VideojuegoEntity>)
+    suspend fun insertAll(videojuegos: List<VideoGameEntity>)
 
     @Update
-    suspend fun updateVideojuego(videojuego: VideojuegoEntity)
+    suspend fun updateVideoGame(videojuego: VideoGameEntity)
 
     @Delete
-    suspend fun deleteVideojuego(videojuego: VideojuegoEntity)
+    suspend fun deleteVideoGame(videojuego: VideoGameEntity)
 
     @Query("SELECT COUNT(*) FROM videojuegos")
     suspend fun getCount(): Int
